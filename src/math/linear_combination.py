@@ -1,22 +1,21 @@
 from sympy.abc import *
-from sympy import Matrix, Symbol
+from sympy import Matrix, Symbol,shape,linsolve
 
-k1 = Symbol('k1')
-k2 = Symbol('k2')
-k3 = Symbol('k3')
+def linear_combination():
 
-M = Matrix([[3, -2, 4]])
-M1 = Matrix([[1, -1, 3]])
-M2 = Matrix([[1, 0, 1]])
-M3 = Matrix([[0, 1, 1]])
+    vectors=Matrix([[1, -1, 3],[1, 0, 1],[0, 1, 1]])
+    len_vectors=shape(vectors)[0]
+    k=[]
+    for i in range(0,len_vectors):
+        k.append(Symbol(f'k{i}'))
 
-Mk = M1 * k1 + M2 * k2 + M3 * k3
-# print(Mk.det())
+    M = Matrix([[3, -2, 4]])
+    multiplied_vectors=[list(vectors.row(i) *k[i]) for i in range(0,len_vectors)]
+    vectors2=Matrix(multiplied_vectors)
+    matrix=Matrix([list(vectors2.col(i)) for i in range(0,len_vectors)])
+    roots=linsolve([matrix, M])
+    print(roots)
 
-Mr = Matrix(
-    [[M1[0], M2[0], M3[0]],
-     [M1[1], M2[1], M3[1]],
-     [M1[2], M2[2], M3[2]]]
-)
+linear_combination()
 
-print(Mr.inv())
+

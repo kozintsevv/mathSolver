@@ -1,37 +1,30 @@
-from sympy import integrate, sympify, simplify
+from sympy import integrate, sympify
 from sympy.abc import x, y
 
-class Integral:
+class DoubleIntegral:
     def __init__(self,expression,interval_x,interval_y):
         self.expression=sympify(expression)
         self.lower_interval_x,self.upper_interval_x=sympify(interval_x)
         self.lower_interval_y,self.upper_interval_y=sympify(interval_y)
 
-    
-        
+    def calculate(self):
+        self.integrate_y=integrate(self.expression,y)
+        print(f'Интегрирование по y :{self.integrate_y}')
 
-def integral():
-    integ=Integral(x**2,(1,3),(0,1/x))
+        self.upper_sub_y=self.integrate_y.subs(y,self.upper_interval_y)
+        self.lower_sub_y=self.integrate_y.subs(y,self.lower_interval_y)
 
-    integrate_y=integrate(integ.expression,y)
-    print(f'Интегрирование по y :{integrate_y}')
+        self.subtract_y=self.upper_sub_y-self.lower_sub_y
+        print(f'Разность по y: {self.upper_sub_y}-{self.lower_sub_y}')
 
-    upper_sub_y=integrate_y.subs(y,integ.upper_interval_y)
-    lower_sub_y=integrate_y.subs(y,integ.lower_interval_y)
+        self.integrate_x=integrate(self.subtract_y,x)
+        print(f'Интегрирование по x: {self.integrate_x}')
 
-    subtract_y=upper_sub_y-lower_sub_y
-    print(f'Разность по y: {upper_sub_y}-{lower_sub_y}')
+        self.upper_sub_x=self.integrate_x.subs(x,self.upper_interval_x)
+        self.lower_sub_x=self.integrate_x.subs(x,self.lower_interval_x)
 
-    integrate_x=integrate(subtract_y,x)
-    print(f'Интегрирование по x: {integrate_x}')
+        self.subtract_x=self.upper_sub_x-self.lower_sub_x
+        print(f'Разность по х: {self.upper_sub_x}-{self.lower_sub_x}')
 
-    upper_sub_x=integrate_x.subs(x,integ.upper_interval_x)
-    lower_sub_x=integrate_x.subs(x,integ.lower_interval_x)
-
-    subtract_x=upper_sub_x-lower_sub_x
-    print(f'Разность по х: {upper_sub_x}-{lower_sub_x}')
-
-    print(f'Ответ:{subtract_x}')
-
-integral()
+        print(f'Ответ:{self.subtract_x}')
 

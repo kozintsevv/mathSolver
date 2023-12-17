@@ -1,9 +1,10 @@
 from sympy import integrate, sympify
-from sympy.abc import x, y
+from sympy.abc import *
+from expression import Expression
 
-class DoubleIntegral:
+class DoubleIntegral(Expression):
     def __init__(self,expression,interval_x,interval_y):
-        self.expression=sympify(expression)
+        super().__init__(expression)
         self.lower_interval_x,self.upper_interval_x=sympify(interval_x)
         self.lower_interval_y,self.upper_interval_y=sympify(interval_y)
 
@@ -27,4 +28,3 @@ class DoubleIntegral:
         print(f'Разность по х: {self.upper_sub_x}-{self.lower_sub_x}')
 
         print(f'Ответ:{self.subtract_x}')
-

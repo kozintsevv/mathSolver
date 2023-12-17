@@ -1,10 +1,10 @@
 from sympy import solve,diff
-from sympy import *
-from sympy.abc import x, y
+from sympy.abc import *
+from expression import Expression
 
-class Expression:
+class Extrems(Expression):
     def __init__(self,expression):
-        self.expression=sympify(expression)
+        super().__init__(expression)
 
     def system(self):
         self.deff_y=self.expression.diff(y)

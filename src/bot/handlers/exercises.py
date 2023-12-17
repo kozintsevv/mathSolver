@@ -3,7 +3,6 @@ from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardRemove
 
 from keyboards.for_exercises import get_exercise_kb
-import extrems
 
 router = Router()
 
@@ -17,7 +16,7 @@ async def local_extrems(message: Message):
 
 @router.message()
 async def answer(message:Message):
-    await message.reply(f'{extrems.Expression(message.text).find_extrems()}')
+    await message.reply(f'test')
 
 @router.message(F.text.lower() == "count double integral")
 async def double_intregral(message: Message):

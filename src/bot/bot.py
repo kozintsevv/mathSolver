@@ -2,18 +2,16 @@ import asyncio
 import logging
 
 from config_reader import config
-from handlers import exercises
+from handlers import subject_task
 
-from aiogram import Bot,Dispatcher,types,F
-from aiogram.filters import Command
-from aiogram.utils.keyboard import ReplyKeyboardBuilder
+from aiogram import Bot,Dispatcher
 
 
 async def main():
     bot = Bot(token=config.bot_token.get_secret_value())
     dp = Dispatcher()
 
-    dp.include_routers(exercises.router)
+    dp.include_routers(subject_task.router)
 
     logging.basicConfig(level=logging.INFO)
 

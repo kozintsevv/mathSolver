@@ -1,22 +1,31 @@
 from sympy.abc import *
-from sympy import Matrix, Symbol
+from sympy import Matrix, Symbol,shape,linsolve
 
-k1 = Symbol('k1')
-k2 = Symbol('k2')
-k3 = Symbol('k3')
+class LinearCombination:
+    def __init__(self,vectors,equal_vector):
+        self.vectors=vectors
+        self.equal_vector=equal_vector
+    def calculate(self):
+        self.vectors=Matrix(self.vectors)
+        self.M = Matrix(self.equal_vector)
 
-M = Matrix([[3, -2, 4]])
-M1 = Matrix([[1, -1, 3]])
-M2 = Matrix([[1, 0, 1]])
-M3 = Matrix([[0, 1, 1]])
+        self.len_vectors=shape(self.vectors)[0]
 
-Mk = M1 * k1 + M2 * k2 + M3 * k3
-# print(Mk.det())
+        self.k=[Symbol(f'k{i+1}') for i in range(0,self.len_vectors)]
 
-Mr = Matrix(
-    [[M1[0], M2[0], M3[0]],
-     [M1[1], M2[1], M3[1]],
-     [M1[2], M2[2], M3[2]]]
-)
+        self.multiplied_vectors=[list(self.vectors.row(i) *self.k[i]) for i in range(0,self.len_vectors)]
+        print(f'{self.equal_vector}={self.multiplied_vectors}')
+        
+        self.vectors2=Matrix(self.multiplied_vectors)
+        self.matrix=Matrix([list(self.vectors2.col(i)) for i in range(0,self.len_vectors)])
+        print(self.matrix)
+        self.roots=linsolve([self.matrix, self.M])
+        print(self.roots)
 
-print(Mr.inv())
+if __name__=='__main__':
+    linear_combination=LinearCombination([[1, -2, 1],[-1, 1, 0],[1, 4, 2]],[[1, 3, 3]]).calculate()
+    linear_combination=LinearCombination([[1, -1, 3],[1, 0, 1],[0, 1, 1]],[[3, -2, 4]]).calculate()
+    linear_combination=LinearCombination([[1, 1, 3],[-1, 0, -2],[2, 2, 7]],[[1, 1, 2]]).calculate()
+    linear_combination=LinearCombination([[1, -2, 1],[-1, 1, 0],[1, 4, 2]],[[1, 3, 3]]).calculate()
+
+

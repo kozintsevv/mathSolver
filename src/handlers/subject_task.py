@@ -3,7 +3,7 @@ from aiogram.filters import Command,StateFilter
 from aiogram.types import Message, ReplyKeyboardRemove,callback_query
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-from university_math.extrems import Extrems
+from vsb_math.extrems import Extrems
  
 from keyboards.for_subject import get_subject_kb
 from keyboards.for_task import get_task_kb

@@ -1,6 +1,6 @@
 from sympy import solve, diff
 from sympy.abc import *
-from expression import Expression
+from vsb_math.expression import Expression
 
 
 class Extrems(Expression):
@@ -61,3 +61,4 @@ class Extrems(Expression):
 
 if __name__=='__main__':
     extrem=Extrems('x**2+4*y+15').find_extrems()
+    

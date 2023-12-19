@@ -64,7 +64,15 @@ async def extrem_output(message:Message,state:FSMContext):
     await message.answer_sticker(r'CAACAgIAAxkBAAJpOWWBnQpNP4BacSk_fc3Z2d5Xev1KAALUFAAC8i2ZSFHAjhpo6zLnMwQ')
     extrem=Extrems(message.text)
     extrem.find_extrems()
-    await message.answer(solved_extrem)
+    await message.answer(solved_extrem.format(
+        derivate_x=extrem.deff_x,
+        derivate_y=extrem.deff_y,
+        roots=extrem.roots,
+        derivate_x_x=extrem.deff_x_x,
+        derivate_y_x=extrem.deff_y_x,
+        derivate_y_y=extrem.deff_y_y,
+        matrixes=extrem.matrixes
+        ))
     await state.clear()
 
     

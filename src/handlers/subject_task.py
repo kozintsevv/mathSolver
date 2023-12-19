@@ -3,7 +3,8 @@ from aiogram.filters import Command,StateFilter
 from aiogram.types import Message, ReplyKeyboardRemove,callback_query
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-
+from vsb_math.extrems import Extrems
+ 
 from keyboards.for_subject import get_subject_kb
 from keyboards.for_task import get_task_kb
 
@@ -58,8 +59,11 @@ async def incorrect_task(message: Message):
     )
 
 @router.message(SolveTask.input_task)
-async def extrem_input(message,state:FSMContext):
-    await message.answer('Решаю')
+async def extrem_input(message:Message,state:FSMContext):
+    await message.answer_sticker(r'CAACAgIAAxkBAAJpOWWBnQpNP4BacSk_fc3Z2d5Xev1KAALUFAAC8i2ZSFHAjhpo6zLnMwQ')
+    extrem=Extrems(message.text)
+    extrem.find_extrems()
+    await message.answer(f'Первая производная по x : {extrem.deff_x}\nПервая производная по y : {extrem.deff_y}')
     await state.clear()
 
     

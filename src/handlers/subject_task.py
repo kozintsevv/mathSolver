@@ -3,12 +3,16 @@ from aiogram.filters import Command,StateFilter
 from aiogram.types import Message, ReplyKeyboardRemove,callback_query
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
+
 from vsb_math.extrems import Extrems
 from vsb_math.double_integral import DoubleIntegral
+
 from strings.ru import *
  
 from keyboards.for_subject import get_subject_kb
 from keyboards.for_task import get_task_kb
+
+from collections import deque
 
 class SolveTask(StatesGroup):
     choosing_subject = State()
@@ -16,25 +20,44 @@ class SolveTask(StatesGroup):
     input_extrem=State()
     input_double_integral=State()
 
+
 router = Router()
 
+stack_deque = deque()
+
+
 @router.message(StateFilter(None),Command('menu'))
-async def choose_subject(message: Message,state:FSMContext):
+async def choose_subject(message:Message,state:FSMContext):
     await message.answer(text='Выбери предмет.', reply_markup=get_subject_kb())
     await message.answer_sticker(r"CAACAgIAAxkBAAJowmWAIKp4YuYZdsvZy3UQNpOFsIiyAAL6NQACMFKBSM1oUiZzBlLkMwQ")
+    await state.set_state(SolveTask.choosing_subject)
+
+
+@router.callback_query(SolveTask.choosing_task,F.data=='back')
+async def to_subject_state(callback:callback_query,state:FSMContext):
+    if stack_deque:
+        sent_message=stack_deque[0]
+        await sent_message.delete()
+    await callback.message.answer(text='Выбери предмет.', reply_markup=get_subject_kb())
+    await callback.message.answer_sticker(r"CAACAgIAAxkBAAJowmWAIKp4YuYZdsvZy3UQNpOFsIiyAAL6NQACMFKBSM1oUiZzBlLkMwQ")
     await state.set_state(SolveTask.choosing_subject)
 
 
 @router.message(SolveTask.choosing_subject,F.text.lower() == "ma2")
 async def choose_task_ma2(message: Message,state:FSMContext):
     await state.update_data(chosen_subject=message.text.lower())
-    await message.reply(f'Выбери типа задания по предмету {message.text}:', reply_markup=get_task_kb())
+    message_to_delete=await message.answer(choice.format(subject=message.text), reply_markup=ReplyKeyboardRemove())
+    await message_to_delete.delete()
+    sent_message=await message.reply(f'Выбери тип задания по предмету {message.text}:', reply_markup=get_task_kb())
     await state.set_state(SolveTask.choosing_task)
+    stack_deque.appendleft(sent_message)
+
 
 @router.message(SolveTask.choosing_subject,F.text.lower() == "la")
 async def choose_task_la(message: Message,state:FSMContext):
     await state.update_data(chosen_subject=message.text)
-    await message.reply(f'Выбери типа задания по предмету {message.text}:',reply_markup=ReplyKeyboardRemove())
+    await message.reply(choice.format(subject=message.text), reply_markup=ReplyKeyboardRemove())
+    # await message.reply(f'Выбери типа задания по предмету {message.text}:',reply_markup=ReplyKeyboardRemove())
     await state.set_state(SolveTask.choosing_task)
 
 @router.message(SolveTask.choosing_subject)
@@ -44,14 +67,24 @@ async def incorrect_subject(message: Message):
         reply_markup=get_subject_kb()
     )
 
+@router.callback_query(StateFilter(SolveTask.input_double_integral,SolveTask.input_extrem),F.data=='back')
+async def to_task_state(callback:callback_query,state:FSMContext):
+    if stack_deque:
+        sent_message=stack_deque[0]
+        await sent_message.delete()
+    await state.set_state(SolveTask.choosing_task)
+
 @router.callback_query(SolveTask.choosing_task,F.data=='double_integral')
 async def double_integral_input(callback:callback_query,state:FSMContext):
-    await callback.message.answer('Введи функцию и интервалы(разделенные пробелом):')
+    print()
+    sent_message=await callback.message.answer('Введи функцию и интервалы(разделенные пробелом):')
+    stack_deque.appendleft(sent_message)
     await state.set_state(SolveTask.input_double_integral)
 
 @router.callback_query(SolveTask.choosing_task,F.data=='extrem')
 async def extrem_input(callback:callback_query,state:FSMContext):
-    await callback.message.answer('Введи функцию:')
+    sent_message=await callback.message.answer('Введи функцию:')
+    stack_deque.appendleft(sent_message)
     await state.set_state(SolveTask.input_extrem)
 
 @router.message(SolveTask.choosing_task)

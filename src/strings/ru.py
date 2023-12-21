@@ -19,5 +19,7 @@ solved_double_integral='Интегрирование по y : {integrate_y}\n'\
                        'Интегрирование по x : {integrate_x}\n'\
                        'Разность по х,после подстановки : {upper_sub_x} - ({lower_sub_x}) = {difference_x}\n\n'\
                        'Ответ : {difference_x}'
+
+choice='Ты выбрал {subject}.'
                        
               

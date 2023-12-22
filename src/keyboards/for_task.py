@@ -2,7 +2,7 @@ from aiogram.utils.keyboard import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram import types
 
 
-def get_task_kb() -> InlineKeyboardMarkup:
+def get_task_ma2() -> InlineKeyboardMarkup:
     buttons = [
         [
             types.InlineKeyboardButton(
@@ -12,6 +12,19 @@ def get_task_kb() -> InlineKeyboardMarkup:
         [
             types.InlineKeyboardButton(
                 text="Локальный экстремум", callback_data="extrem"
+            )
+        ],
+        [types.InlineKeyboardButton(text="Назад", callback_data="back")],
+    ]
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
+    return keyboard
+
+
+def get_task_la() -> InlineKeyboardMarkup:
+    buttons = [
+        [
+            types.InlineKeyboardButton(
+                text="Линейная комбинация", callback_data="linear_combination"
             )
         ],
         [types.InlineKeyboardButton(text="Назад", callback_data="back")],

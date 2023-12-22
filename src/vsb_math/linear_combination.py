@@ -31,7 +31,7 @@ class LinearCombination:
 
 if __name__ == "__main__":
     linear_combination = LinearCombination(
-        [[1, -2, 1], [-1, 1, 0], [1, 4, 2]], [[1, 3, 3]]
+        "[[1, -2, 1], [-1, 1, 0], [1, 4, 2]] [[1, 3, 3]]"
     ).calculate()
     linear_combination = LinearCombination(
         [[1, -1, 3], [1, 0, 1], [0, 1, 1]], [[3, -2, 4]]

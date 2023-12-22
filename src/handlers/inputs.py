@@ -27,3 +27,10 @@ async def extrem_input(callback: callback_query, state: FSMContext):
     sent_message = await callback.message.answer("Введи функцию:")
     stack_deque.appendleft(sent_message)
     await state.set_state(Input.input_extrem)
+
+
+@router.callback_query(Input.choosing_task, F.data == "linear_combination")
+async def extrem_input(callback: callback_query, state: FSMContext):
+    sent_message = await callback.message.answer("Введи векторы:")
+    stack_deque.appendleft(sent_message)
+    await state.set_state(Input.input_linear_combination)

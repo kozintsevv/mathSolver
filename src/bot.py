@@ -2,7 +2,14 @@ import asyncio
 import logging
 
 from config_reader import config
-from handlers import double_integrals, tasks, subjects, inputs, extrems
+from handlers import (
+    double_integrals,
+    tasks,
+    subjects,
+    inputs,
+    extrems,
+    linear_combination,
+)
 
 from aiogram import Bot, Dispatcher
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
@@ -19,6 +26,7 @@ async def main():
         inputs.router,
         extrems.router,
         double_integrals.router,
+        linear_combination.router,
     )
 
     logging.basicConfig(level=logging.INFO)

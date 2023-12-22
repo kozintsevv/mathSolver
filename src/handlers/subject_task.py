@@ -39,7 +39,7 @@ async def choose_subject(message: Message, state: FSMContext):
 @router.callback_query(SolveTask.choosing_task, F.data == "back")
 async def to_subject_state(callback: callback_query, state: FSMContext):
     if stack_deque:
-        sent_message = stack_deque[0]
+        sent_message = stack_deque.popleft()
         await sent_message.delete()
     await callback.message.answer(text="Выбери предмет.", reply_markup=get_subject_kb())
     await callback.message.answer_sticker(
@@ -55,7 +55,7 @@ async def choose_task_ma2(message: Message, state: FSMContext):
         choice.format(subject=message.text), reply_markup=ReplyKeyboardRemove()
     )
     await message_to_delete.delete()
-    sent_message = await message.reply(
+    sent_message = await message.answer(
         f"Выбери тип задания по предмету {message.text}:", reply_markup=get_task_kb()
     )
     await state.set_state(SolveTask.choosing_task)
@@ -85,14 +85,13 @@ async def incorrect_subject(message: Message):
 )
 async def to_task_state(callback: callback_query, state: FSMContext):
     if stack_deque:
-        sent_message = stack_deque[0]
+        sent_message = stack_deque.popleft()
         await sent_message.delete()
     await state.set_state(SolveTask.choosing_task)
 
 
 @router.callback_query(SolveTask.choosing_task, F.data == "double_integral")
 async def double_integral_input(callback: callback_query, state: FSMContext):
-    print()
     sent_message = await callback.message.answer(
         "Введи функцию и интервалы(разделенные пробелом):"
     )

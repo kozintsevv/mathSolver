@@ -6,3 +6,4 @@ class Input(StatesGroup):
     choosing_task = State()
     input_extrem = State()
     input_double_integral = State()
+    input_linear_combination = State()

@@ -39,5 +39,5 @@ class Extrems(Expression):
         return self.roots
 
 
-if __name__ == '__main__':
-    extrem = Extrems('x**2+4*y+15').find_extrems()
+if __name__ == "__main__":
+    extrem = Extrems("x**2+4*y+15").find_extrems()

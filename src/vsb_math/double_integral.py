@@ -24,6 +24,7 @@ class DoubleIntegral(Expression):
 
         self.subtract_x = self.upper_sub_x - self.lower_sub_x
 
-if __name__=='__main__':
-    expression=DoubleIntegral('x**2','(1,2)','(0,1/x)')
+
+if __name__ == "__main__":
+    expression = DoubleIntegral("x**2", "(1,2)", "(0,1/x)")
     expression.calculate()

@@ -4,8 +4,7 @@ import logging
 from config_reader import config
 from handlers import subject_task
 
-
-from aiogram import Bot,Dispatcher
+from aiogram import Bot, Dispatcher
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
 
 
@@ -22,5 +21,5 @@ async def main():
     await dp.start_polling(bot)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())

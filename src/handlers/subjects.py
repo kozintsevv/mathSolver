@@ -17,7 +17,7 @@ router = Router()
 
 @router.message(Input.choosing_subject)
 @router.callback_query(Input.choosing_task, F.data == "back")
-@router.message(StateFilter(None), Command("menu"))  # 1)Выбор предмета
+@router.message(StateFilter(None), Command("menu"))
 async def choose_subject(
     message: Union[Message, callback_query.CallbackQuery], state: FSMContext
 ):

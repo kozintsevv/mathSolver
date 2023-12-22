@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from config_reader import config
-from handlers import subject_task
+from handlers import double_integrals, tasks, subjects, inputs, extrems
 
 from aiogram import Bot, Dispatcher
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
@@ -13,7 +13,13 @@ async def main():
     dp = Dispatcher()
 
     dp.callback_query.middleware(CallbackAnswerMiddleware())
-    dp.include_routers(subject_task.router)
+    dp.include_routers(
+        tasks.router,
+        subjects.router,
+        inputs.router,
+        extrems.router,
+        double_integrals.router,
+    )
 
     logging.basicConfig(level=logging.INFO)
 

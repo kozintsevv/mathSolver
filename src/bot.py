@@ -9,6 +9,7 @@ from handlers import (
     inputs,
     extrems,
     linear_combination,
+    domain,
 )
 
 from aiogram import Bot, Dispatcher
@@ -27,6 +28,7 @@ async def main():
         extrems.router,
         double_integrals.router,
         linear_combination.router,
+        domain.router,
     )
 
     logging.basicConfig(level=logging.INFO)

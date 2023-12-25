@@ -14,6 +14,11 @@ def get_task_ma2() -> InlineKeyboardMarkup:
                 text="Локальный экстремум", callback_data="extrem"
             )
         ],
+        [
+            types.InlineKeyboardButton(
+                text="Найти область определения", callback_data="domain"
+            )
+        ],
         [types.InlineKeyboardButton(text="Назад", callback_data="back")],
     ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)

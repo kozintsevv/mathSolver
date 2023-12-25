@@ -8,8 +8,6 @@ from strings.ru import *
 
 from states.input import Input
 
-from handlers.tasks import stack_deque
-
 
 router = Router()
 

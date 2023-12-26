@@ -41,3 +41,10 @@ async def domain_input(callback: callback_query, state: FSMContext):
     sent_message = await callback.message.answer("Введи функцию:")
     stack_deque.appendleft(sent_message)
     await state.set_state(Input.domain)
+
+
+@router.callback_query(Input.choosing_task, F.data == "det")
+async def det_input(callback: callback_query, state: FSMContext):
+    sent_message = await callback.message.answer("Введи матрицу:")
+    stack_deque.appendleft(sent_message)
+    await state.set_state(Input.det)

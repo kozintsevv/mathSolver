@@ -32,6 +32,7 @@ def get_task_la() -> InlineKeyboardMarkup:
                 text="Линейная комбинация", callback_data="linear_combination"
             )
         ],
+        [types.InlineKeyboardButton(text="Детерминант", callback_data="det")],
         [types.InlineKeyboardButton(text="Назад", callback_data="back")],
     ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)

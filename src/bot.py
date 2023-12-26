@@ -3,6 +3,7 @@ import logging
 
 from config_reader import config
 from handlers import (
+    instructions,
     double_integrals,
     tasks,
     subjects,
@@ -10,6 +11,7 @@ from handlers import (
     extrems,
     linear_combination,
     domain,
+    det,
 )
 
 from aiogram import Bot, Dispatcher
@@ -22,6 +24,7 @@ async def main():
 
     dp.callback_query.middleware(CallbackAnswerMiddleware())
     dp.include_routers(
+        instructions.router,
         tasks.router,
         subjects.router,
         inputs.router,
@@ -29,6 +32,7 @@ async def main():
         double_integrals.router,
         linear_combination.router,
         domain.router,
+        det.router,
     )
 
     logging.basicConfig(level=logging.INFO)

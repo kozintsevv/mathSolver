@@ -8,3 +8,4 @@ class Input(StatesGroup):
     input_double_integral = State()
     input_linear_combination = State()
     domain = State()
+    det = State()

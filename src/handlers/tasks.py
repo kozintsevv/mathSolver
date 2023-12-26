@@ -82,3 +82,14 @@ async def to_task_state(callback: callback_query, state: FSMContext):
         sent_message = stack_deque.popleft()
         await sent_message.delete()
     await state.set_state(Input.choosing_task)
+
+
+@router.callback_query(
+    StateFilter(Input.det),
+    F.data == "back",
+)
+async def to_task_state(callback: callback_query, state: FSMContext):
+    if stack_deque:
+        sent_message = stack_deque.popleft()
+        await sent_message.delete()
+    await state.set_state(Input.choosing_task)

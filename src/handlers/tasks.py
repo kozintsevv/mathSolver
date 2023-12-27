@@ -52,7 +52,7 @@ async def to_task_state(callback: callback_query, state: FSMContext):
 
 
 @router.callback_query(
-    StateFilter(Input.input_linear_combination),
+    StateFilter(Input.inv),
     F.data == "back",
 )
 async def to_task_state(callback: callback_query, state: FSMContext):

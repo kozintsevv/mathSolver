@@ -12,6 +12,7 @@ from handlers import (
     linear_combination,
     domain,
     det,
+    inv,
 )
 
 from aiogram import Bot, Dispatcher
@@ -36,6 +37,7 @@ async def main():
         linear_combination.router,
         domain.router,
         det.router,
+        inv.router,
     )
 
     logging.basicConfig(level=logging.INFO)

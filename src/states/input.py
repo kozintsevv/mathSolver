@@ -9,3 +9,4 @@ class Input(StatesGroup):
     input_linear_combination = State()
     domain = State()
     det = State()
+    inv = State()

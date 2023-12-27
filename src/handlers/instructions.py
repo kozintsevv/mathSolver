@@ -44,7 +44,8 @@ async def send_instructions(message: Message, state: FSMContext):
     )
 
     await message.answer(
-        "<b>Детерминант.</b>\n<b>Задание:</b>", parse_mode=ParseMode.HTML
+        "<b>Детерминант | Обратная матрица.</b>\n<b>Задание:</b>",
+        parse_mode=ParseMode.HTML,
     )
     det = FSInputFile("instructions_images/det.jpg")
     await message.answer_photo(det)

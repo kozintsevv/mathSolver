@@ -7,6 +7,7 @@ from sympy import (
     sympify,
     det,
 )
+from aiogram.types import Message
 
 
 class LinearAlgebra:
@@ -103,3 +104,45 @@ if __name__ == "__main__":
     lin_alg = LinearAlgebra()
     lin_alg.det_laplace(matrix)
     print(lin_alg.sub)
+    # Создаем матрицу
+    original_matrix = [1, -1, 2, 2], [-2, 3, -5, -2], [-1, 2, -1, 1], [2, -4, 5, -1]
+
+    # original_matrix = Matrix([[1, 2, 1, 2], [-1, -3, 0, -1], [0, 2, -1, 1], [0, 3, -2, 1]])
+    # Вычисляем обратную матрицу с выводом максимально полной информации
+    inverse_matrix_steps = invert_matrix(original_matrix)
+
+
+from sympy import Matrix, eye
+
+
+async def invert_matrix(message):
+    matrix = Matrix(list(sympify(message.text)))
+    n = matrix.shape[0]
+
+    # Создаем расширенную матрицу [A | I], где A - исходная матрица, I - единичная матрица
+    augmented_matrix = Matrix.hstack(matrix, eye(n))
+
+    for i in range(n):
+        # Приводим главный элемент текущей строки к единице
+        diag_element = augmented_matrix[i, i]
+        augmented_matrix.row_op(i, lambda row, j: row / diag_element)
+        await message.answer(
+            f"\nШаг {i + 1}: Приведение главного элемента {i + 1} строки к единице\nМножитель: 1/{diag_element}\n{augmented_matrix}"
+        )
+
+        # Обнуляем элементы под и над текущим главным элементом
+        for j in range(n):
+            if i != j:
+                multiplier = augmented_matrix[j, i]
+                augmented_matrix.row_op(
+                    j, lambda row, k: row - multiplier * augmented_matrix[i, k]
+                )
+                if multiplier != 0:
+                    await message.answer(
+                        f"Шаг {i + 1}: Обнуление элементов под и над главным элементом {i + 1}\nОтнимаем от {j+1} строки строку {i+1} умноженную на {multiplier}\n{augmented_matrix}"
+                    )
+
+    # Выделяем обратную матрицу из расширенной матрицы
+    inverse_matrix = augmented_matrix[:, n:]
+
+    await message.answer(f"Обратная матрица:\n{inverse_matrix}")

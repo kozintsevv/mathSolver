@@ -1,12 +1,11 @@
-from aiogram.types import ReplyKeyboardMarkup
-from aiogram.utils.keyboard import ReplyKeyboardBuilder
+from aiogram.utils.keyboard import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram import types
 
 
-def get_subject_kb() -> ReplyKeyboardMarkup:
-    button_texts = ["MA2", "LA"]
-    kb = ReplyKeyboardBuilder()
-    for button_text in button_texts:
-        kb.button(text=button_text)
-    kb.adjust(4)
-
-    return kb.as_markup(resize_keyboard=True)
+def get_subject_kb() -> InlineKeyboardMarkup:
+    buttons = [
+        [types.InlineKeyboardButton(text="Мат. Анализ", callback_data="ma")],
+        [types.InlineKeyboardButton(text="Линейная алгебра", callback_data="la")],
+    ]
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=buttons)
+    return keyboard

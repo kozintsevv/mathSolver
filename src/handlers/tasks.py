@@ -5,7 +5,7 @@ from aiogram.filters import StateFilter
 
 from strings.ru import *
 
-from keyboards.for_task import get_task_ma2, get_task_la
+from keyboards.for_task import get_task_ma, get_task_la
 
 from states.input import Input
 
@@ -17,18 +17,11 @@ router = Router()
 stack_deque = deque()
 
 
-@router.message(Input.choosing_task)
-@router.message(Input.choosing_subject, F.text.lower() == "ma2")
-async def choose_task_ma2(message: Message, state: FSMContext):
-    disappearing = await message.answer(
-        choice.format(subject=message.text),
-        reply_markup=ReplyKeyboardRemove(),
-    )
-    await disappearing.delete()
-
-    sent_message = await message.answer(
-        f"Выбери тип задания по предмету MA2:",
-        reply_markup=get_task_ma2(),
+# @router.callback_query(Input.choosing_task,F.data == "ma")
+@router.callback_query(Input.choosing_subject, F.data == "ma")
+async def choose_task_ma(callback: callback_query, state: FSMContext):
+    sent_message = await callback.message.edit_text(
+        "Выбери задание:", reply_markup=get_task_ma()
     )
 
     await state.set_state(Input.choosing_task)
@@ -36,16 +29,12 @@ async def choose_task_ma2(message: Message, state: FSMContext):
     stack_deque.appendleft(sent_message)
 
 
-@router.message(Input.choosing_subject, F.text.lower() == "la")
-async def choose_task_la(message: Message, state: FSMContext):
-    disappearing = await message.reply(
-        choice.format(subject=message.text), reply_markup=ReplyKeyboardRemove()
+@router.callback_query(Input.choosing_subject, F.data == "la")
+async def choose_task_la(callback: callback_query, state: FSMContext):
+    sent_message = await callback.message.edit_text(
+        "Выбери задание:", reply_markup=get_task_la()
     )
-    await disappearing.delete()
-    sent_message = await message.reply(
-        f"Выбери типа задания по предмету {message.text}:",
-        reply_markup=get_task_la(),
-    )
+
     await state.set_state(Input.choosing_task)
 
     stack_deque.appendleft(sent_message)

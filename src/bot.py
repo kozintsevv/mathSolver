@@ -16,6 +16,9 @@ from handlers import (
 
 from aiogram import Bot, Dispatcher
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
+from db import BotDB
+
+BotDB = BotDB("tg.db")
 
 
 async def main():

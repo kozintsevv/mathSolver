@@ -31,6 +31,10 @@ class BotDB:
         )
         return self.conn.commit()
 
+    def get_statistic(self):
+        result = self.cursor.execute("SELECT * FROM `users`")
+        return result
+
     def close(self):
         """Закрываем соединение с БД"""
         self.connection.close()

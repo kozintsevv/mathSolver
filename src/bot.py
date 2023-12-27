@@ -13,6 +13,7 @@ from handlers import (
     domain,
     det,
     inv,
+    statistics,
 )
 
 from aiogram import Bot, Dispatcher
@@ -28,6 +29,7 @@ async def main():
 
     dp.callback_query.middleware(CallbackAnswerMiddleware())
     dp.include_routers(
+        statistics.router,
         instructions.router,
         tasks.router,
         subjects.router,

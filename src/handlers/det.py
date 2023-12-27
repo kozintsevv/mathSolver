@@ -12,11 +12,17 @@ from handlers.tasks import stack_deque
 
 from sympy import sympify, Matrix
 
+
 router = Router()
 
 
 @router.message(Input.det)
 async def send_det(message: Message, state: FSMContext):
+    from bot import BotDB
+
+    BotDB.increment_action(
+        message.from_user.id,
+    )
     await message.answer_sticker(
         r"CAACAgIAAxkBAAJpOWWBnQpNP4BacSk_fc3Z2d5Xev1KAALUFAAC8i2ZSFHAjhpo6zLnMwQ"
     )

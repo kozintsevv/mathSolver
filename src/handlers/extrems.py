@@ -14,6 +14,11 @@ router = Router()
 
 @router.message(Input.input_extrem)
 async def send_extremes(message: Message, state: FSMContext):
+    from bot import BotDB
+
+    BotDB.increment_action(
+        message.from_user.id,
+    )
     await message.answer_sticker(
         r"CAACAgIAAxkBAAJpOWWBnQpNP4BacSk_fc3Z2d5Xev1KAALUFAAC8i2ZSFHAjhpo6zLnMwQ"
     )

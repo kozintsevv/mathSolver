@@ -21,6 +21,11 @@ def parse_double_integral(str):
 
 @router.message(Input.input_double_integral)
 async def send_double_integral(message: Message, state: FSMContext):
+    from bot import BotDB
+
+    BotDB.increment_action(
+        message.from_user.id,
+    )
     await message.answer_sticker(
         r"CAACAgIAAxkBAAJpOWWBnQpNP4BacSk_fc3Z2d5Xev1KAALUFAAC8i2ZSFHAjhpo6zLnMwQ"
     )
